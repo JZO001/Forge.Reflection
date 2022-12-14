@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup Label="Globals">
+		<SccProjectName>SAK</SccProjectName>
+		<SccProvider>SAK</SccProvider>
+		<SccAuxPath>SAK</SccAuxPath>
+		<SccLocalPath>SAK</SccLocalPath>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFrameworks>net40;netstandard2.0;netcoreapp3.1;net6.0</TargetFrameworks>
+		<Version>2.0.0.0</Version>
+		<AssemblyVersion>2.0.0.0</AssemblyVersion>
+		<Copyright>Copyright © Zoltan Juhasz, 2004-2022</Copyright>
+		<Description>Forge Patterns and Practices</Description>
+		<Product>Forge: reference, practice and patterns implementations and helper(s)</Product>
+		<Company>Forge Project Contributor(s)</Company>
+		<PackageId>Forge.Reflection</PackageId>
+		<Authors>Zoltan Juhasz</Authors>
+		<Title>Forge Reflection</Title>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\.Documents\Forge.pfx</AssemblyOriginatorKeyFile>
+		<ProjectGuid>{FCE936C5-3D9D-40D4-8BA8-2CB52989C3CB}</ProjectGuid>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<DocumentationFile>Forge.Reflection.xml</DocumentationFile>
+		<RepositoryUrl>https://github.com/JZO001/Forge.Reflection</RepositoryUrl>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' != 'net40' and '$(TargetFramework)' != 'netstandard2.0'">
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Forge.Reflection.xml" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Forge.Collections\Forge.Collections.csproj" />
+	  <ProjectReference Include="..\Forge.Logging.Abstraction\Forge.Logging.Abstraction.csproj" />
+	  <ProjectReference Include="..\Forge.Shared\Forge.Shared.csproj" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="echo F|xcopy /r /y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(SolutionDir).Output\$(TargetFramework)\$(TargetName).dll&quot;&#xD;&#xA;echo F|xcopy /r /y &quot;$(TargetDir)$(TargetName).pdb&quot; &quot;$(SolutionDir).Output\$(TargetFramework)\$(TargetName).pdb&quot;&#xD;&#xA;echo F|xcopy /r /y &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(SolutionDir).Output\$(TargetFramework)\$(TargetName).xml&quot;&#xD;&#xA;" />
+	</Target>
+
+</Project>
